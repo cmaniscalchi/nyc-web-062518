@@ -36,11 +36,9 @@ Do websites save our passwords? And if they do, how are they stored? Should a pl
 
 ##### What is the difference between hashing and encrypting?
 
-What is encryption? What can be encrypted? Anything that can be encrypted, must also be able to be decrypted. You can use this time to talk about ciphers, and show how at it's core, encryption and hashing is about these principles. In order to decrypt a cypher, you need to know the cypher used and any parameters (offset, perhaps) used to encrypt the information.
+What is encryption? What can be encrypted? Anything that can be encrypted, must also be able to be decrypted. In order to decrypt a cypher, you need to know the cypher used and any parameters (offset, perhaps) used to encrypt the information.
 
 Hashing is a little different: the ultimate goal of one-way hashing is that you cannot "decrypt" the original text. In addition to any encryption scheme, each authenticated user has a "salt", added information that augments the password to make decryption even harder.
-
-Give an example of various text going through some kind of hashing scheme with salts, so that the students can see this in action. Be sure your example shows that the server is actually validating the equality of the _hashed password_ with the hashed input.
 
 ![](https://media.giphy.com/media/fcaN0b9yGcwbm/giphy.gif)
 
@@ -102,15 +100,13 @@ So, to recap the necessary steps:
 2.  `bcrypt` installed in `Gemfile`
 3.  `has_secure_password` in the `User` model
 
-_If it comes up, talk about `devise` and why it's more valuable to learn auth by doing it with vanilla `bcrypt`._
-
 ---
 
 ### Sessions and cookies
 
 How does an application keep you logged in between requests? Remember, requests are stateless, so sessions allow us to provide a user a sense of continuity as the interact with the website.
 
-How do cookies fit into this? Talk briefly about how they're made, how the application creates, accesses and maintains them. Show what cookies are, in chrome. Ultimately, they're just key-value pairs. Make it clear that each website has it's own cookies, and that cookies aren't secure, because they're not necessarily encrypted.
+How do cookies fit into this? Ultimately, they're just key-value pairs. Each website has it's own cookies. Cookies aren't secure, because they're not necessarily encrypted. We want to limit the amount and type of information stored in cookies. Rails automatically stores and encrypts the session id in our cookie.
 
 What information do we want to store in the cookie?
 
@@ -143,13 +139,13 @@ def create
 end
 ```
 
-Use this time to talk about how in certain cases, it's more secure to offer _less_ feedback to the user. This is why we both authenticate on the existence of the username, and the password match. Still, it's helpful to use `flash[:error]` here.
+In certain cases, it's more secure to offer _less_ feedback to the user. This is why we both authenticate on the existence of the username, and the password match. Still, it's helpful to use `flash[:error]` here.
 
 `sessions/new.html.erb`
 
 Use a `form_tag` instead of a `form_for` here, we don't have a model to couple the form with.
 
-_All forms need an action and a method, and here the action is `/sessions`, but that may not be intuitive to the students, so call it out explicitly._
+_All forms need an action and a method, and here the action is `/sessions`._
 
 ```erb
 <%= form_tag sessions_path do %>
@@ -171,7 +167,7 @@ Augment `sessions_controller#create` with the following line after a successful 
 session[:user_id] = @user.id
 ```
 
-This allows us to save the user_id in the session cookie. `session` persists across the entire usage of the application, and `flash` works just between 2 requests. Show that this new code adds the cookie in browser as well.
+This allows us to save the user_id in the session cookie. `session` persists across the entire usage of the application, and `flash` works just between 2 requests.
 
 Here are the steps that we can use to get our user's songs through the session:
 
@@ -257,7 +253,7 @@ def destroy
 end
 ```
 
-To expose this, talk about a button that shows a "Log Out" button if logged in, and a "Log In" button otherwise.
+We can have a button that shows a "Log Out" button if logged in, and a "Log In" button otherwise.
 
 The best place to do this is in `application.html.erb`, but to expose our controller's method here, we must use the `helper_method :logged_in?` macro in our `ApplicationController`
 
@@ -275,5 +271,7 @@ Finally, in `application.html.erb`:
 
 ## External Resources:
 
-- [BCrypt gem on github](https://github.com/codahale/bcrypt-ruby)
+- [BCrypt gem on github](https://github.com/codahale/bcrypt-ruby#why-you-should-use-bcrypt)
+- [BCrypt Password class source code](https://github.com/codahale/bcrypt-ruby/blob/master/lib/bcrypt/password.rb#L23)
 - [Rails Docs on security](https://guides.rubyonrails.org/security.html#sessions)
+- [Rails Docs on has_and_belongs_to_many](https://guides.rubyonrails.org/association_basics.html#the-has-and-belongs-to-many-association)

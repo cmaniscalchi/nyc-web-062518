@@ -4,12 +4,21 @@
     <title>Auth</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <link rel="shortcut icon" href="https://upload.wikimedia.org/wikipedia/en/5/59/Beaker_%28Muppet%29.jpg">
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
+    <% if logged_in? %>
+      <h3>Welcome, <%= current_user.username %></h3>
+      <%= button_to "Logout", logout_path, method: :delete %>
+    <% else %>
+      <h3>Welcome! To Antisocializr</h3>
+      <%= button_to "Sign Up", new_user_path, method: :get %>
+      <%= button_to "Login", new_session_path, method: :get %>
+    <% end %>
     <%= yield %>
   </body>
 </html>

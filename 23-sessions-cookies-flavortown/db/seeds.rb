@@ -16,7 +16,7 @@ Nacho.create!([{
                 price: 3
               }, {
                 name: 'chicken pot pie nachos',
-                description: 'someone please stop this man from cooking',
+                description: 'someone please stop this dumpster fire from cooking',
                 price: 7
               }, {
                 name: 'dessert nachos',

@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
-  resources :nachos
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  resources :nachos, only: [:index, :show]
+  patch '/cart', to: 'cart#update', as: 'add_to_cart'
 end

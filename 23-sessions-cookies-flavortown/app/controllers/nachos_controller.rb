@@ -1,11 +1,14 @@
 class NachosController < ApplicationController
-  before_action :find_nacho, only: %i[show]
+  before_action :find_nacho, only: :show
+  before_action :get_items_from_cart, only: :index
 
   def index
     @nachos = Nacho.all
   end
 
-  def show; end
+  def show
+    render :show
+  end
 
   private
 
